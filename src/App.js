@@ -45,7 +45,7 @@ class App extends Component {
           id={score.id}
           name={score.name}
           score={score.score}
-          handleInc={this._incrementScoreById.bind(this)}
+          handleInc={e => this._incrementScoreById(e)}
           handleDec={this._decrementScoreById.bind(this)}
           handleReset={this._resetScore.bind(this)}
         />
