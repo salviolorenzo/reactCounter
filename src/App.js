@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import "./App.css";
+import ScoreCard from "./ScoreCard";
 
 class App extends Component {
   constructor(props) {
@@ -38,8 +39,17 @@ class App extends Component {
   _scoresAsCards() {
     const cards = this.state.scores.map(score => {
       return (
-        <div key={score.id}>
-          <h2>
+        // <div key={score.id}>
+        <ScoreCard
+          key={score.id}
+          id={score.id}
+          name={score.name}
+          score={score.score}
+          handleInc={this._incrementScoreById.bind(this)}
+          handleDec={this._decrementScoreById.bind(this)}
+          handleReset={this._resetScore.bind(this)}
+        />
+        /* <h2>
             Name: {score.name}, Score: {score.score}
           </h2>
           <button
@@ -49,7 +59,21 @@ class App extends Component {
           >
             +
           </button>
-        </div>
+          <button
+            onClick={() => {
+              this._decrementScoreById(score.id);
+            }}
+          >
+            -
+          </button>
+          <button
+            onClick={() => {
+              this._resetScore(score.id);
+            }}
+          >
+            Reset
+          </button> */
+        // </div>
       );
     });
     return cards;
@@ -95,6 +119,43 @@ class App extends Component {
       scores: newScores
     });
   }
+
+  _decrementScoreById(id) {
+    const newScores = this.state.scores.map(score => {
+      if (score.id === id) {
+        score.score -= 1;
+      }
+      return score;
+    });
+    this.setState({
+      scores: newScores
+    });
+  }
+
+  _resetScore(id) {
+    const newScores = this.state.scores.map(score => {
+      if (score.id === id) {
+        score.score = 0;
+      }
+      return score;
+    });
+    this.setState({
+      scores: newScores
+    });
+  }
+  // Version 3: using .map and the ternary operator + implicit return
+  // using shorthand to copy values
+  // _incrementScoreById(id) {
+  //   // get this.state.scores
+  //   const newScores = this.state.scores.map(score => {
+  //     return score.id !== id ? score : { ...score, score: score.score + 1 };
+  //   });
+  //   // increment
+  //   // call this.setState
+  //   this.setState({
+  //     scores: newScores
+  //   });
+  // }
 }
 
 export default App;
